@@ -1,0 +1,233 @@
+<style>
+    
+    *{
+    margin: 0;
+    padding: 0;
+}
+body{
+    font-family: lato;
+    display: grid;
+    height: 100%;
+    text-align: center;
+    place-items: center;
+}
+#entity{
+    width: 100%;
+    height: 100vh;
+    scroll-behavior: smooth;
+    overflow-y: scroll;
+}
+#entity div{
+    position: relative;
+    height: 100%;
+}
+.content {
+    position: absolute;
+    top: 80%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    text-align: center;
+    padding: 0 40px;
+}
+.content h1 {
+    font-size: 70px;
+    font-weight: bold;
+    color: #262626;
+    text-transform: uppercase;
+    margin-bottom: 40px;
+}
+.content h2 {
+  font-size: 35px;
+  font-weight: bold;
+  color: #262626;
+  text-transform: uppercase;
+  margin-bottom: 40px;
+}
+
+.content p {
+line-height: 1.5;
+font-style: italic;
+margin: auto;
+color: #000;
+}
+
+
+.textarea{
+  width: 100%;
+  height: 150px;
+  padding: 12px 20px;
+  box-sizing: border-box;
+  border-color: #000;
+  border-width: 1px;
+  border-radius: 4px;
+  background-color: #f8f8f8;
+  resize: none;
+  
+}
+
+.slider {
+  width: 100%;
+  height: 15px;
+  border-radius: 5px;  
+  background: #99c68e;
+  outline: none;
+  opacity: 0.7;
+  -webkit-transition: .2s;
+  transition: opacity .2s;
+}
+
+.slider::-webkit-slider-thumb {
+  appearance: none;
+  width: 25px;
+  height: 25px;
+  border-radius: 50%; 
+  background: #99c68e;
+  cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+  width: 25px;
+  height: 25px;
+  border-radius: 50%;
+  background: #99c68e;
+  cursor: pointer;
+}
+datalist {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  writing-mode: vertical-lr;
+  width: 455px;
+}
+
+#check {
+    display: block;
+    margin-inline-start: 2px;
+    margin-inline-end: 2px;
+    padding-block-start: 0.35em;
+    padding-inline-start: 0.75em;
+    padding-inline-end: 0.75em;
+    padding-block-end: 0.625em;
+    min-inline-size: min-content;
+    text-align: left;
+}
+
+.submit{
+  background-color: #fff;
+  border-color: #fff;
+  border-radius: 4px;
+  padding:10px;
+  margin:10px 0;
+  transition-duration: 0.4s;
+  color: #000;
+}
+.submit:hover {
+  background-color: #ddffde; 
+  color: #000;
+}
+
+
+</style>
+
+<div id="entity">
+    <section class="content">
+    <h2>Entity Extraction</h2>
+    <p>
+        Write a text in text area:
+    </p>
+    <form [formGroup]="entityForm" (submit)="findEntity()">
+      <textarea type="text" class="textarea" name="textarea" [formControlName]="'text'"></textarea>
+      <div class="slider">
+          <p>Choose your minimum confidence</p>
+          <input type="range" min="0" max="1" step="0.2" class="slider" id="mySlider" list="tickmarks" [formControlName]="'confidance'">
+          <datalist id="tickmarks">
+            <option value="0">0</option>
+            <option value="0.2">0,2</option>
+            <option value="0.4">0,4</option>
+            <option value="0.6">0,6</option>
+            <option value="0.8">0,8</option>
+            <option value="1">1</option>
+          </datalist>
+        </div>
+        <div id="check">
+          <p>Choose option include values:</p>
+          <div>
+            <input type="checkbox" class="include "id="image" name="include" value="image" [formControlName]="'check1'" />
+            <label for="coding">Image</label>
+          </div>
+          <div>
+            <input type="checkbox" class="include" id="abstract" name="include" value="abstract" [formControlName]="'check2'"/>
+            <label for="music">Abstract</label>
+          </div>
+          <div>
+            <input type="checkbox" class="include"  id="categories" name="include" value="categories" [formControlName]="'check3'"/>
+            <label for="music">Categories</label>
+          </div>
+        </div>
+        <div>
+          <input type="submit" class="submit" value="Submit">
+          <div>
+              <p> The langConfidence of the sentence:</p><span style="color: purple;">{{this.entity.langConfidence}}</span>
+          </div>
+          <div *ngFor="let annotations of this.entity.annotations">
+              <div>
+                <br>
+                <span><p><br>Ttitle:</p></span> <span style="color: red;">{{annotations.title}}</span>
+              </div>
+              <div> 
+                <span><p>Abstarct:</p></span> <span style="color: red;">{{annotations.abstract}}</span>
+              </div>
+              <div>
+                <span><p>Categories:</p></span>
+                <span *ngFor="let categories of annotations.categories" style="color: rgb(92, 9, 9);"> {{categories}} <br></span>
+                <br>
+              </div>
+              <div>
+                <img style="height: 100px; width: 100px"
+                src={{annotations.image.full}}>
+              </div>
+          </div>
+        </div>
+      </form>
+    </section>
+
+
+</div>
+
+
+<!-- 0
+: 
+{start: 4, end: 13, spot: 'Mona Lisa', confidence: 0.8905, id: 70889, …}
+1
+: 
+{start: 19, end: 36, spot: 'sixteenth century', confidence: 0.6422, id: 34568, …}
+2
+: 
+{start: 37, end: 49, spot: 'oil painting', confidence: 0.8006, id: 22605, …}
+3
+: 
+{start: 61, end: 69, spot: 'Leonardo', confidence: 0.7747, id: 18079, …}
+4
+: 
+{start: 88, end: 94, spot: 'Louvre', confidence: 0.8895, id: 17546, …}
+5
+: 
+{start: 98, end: 103, spot: 'Paris', confidence: 0.7768, id: 22989, …}
+length
+: 
+6
+[[Prototype]]
+: 
+Array(0)
+lang
+: 
+"en"
+langConfidence
+: 
+1
+time
+: 
+3
+timestamp
+: 
+"2022-10-22T12:21:36.041" -->

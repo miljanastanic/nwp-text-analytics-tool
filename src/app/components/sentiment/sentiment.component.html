@@ -1,0 +1,123 @@
+<style>
+    #sentiment div{
+        position: relative;
+        height: 100%;
+    }
+    .content {
+        position: absolute;
+        top: 60%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+        text-align: center;
+        padding: 0 40px;
+    }
+    .content h1 {
+        font-size: 70px;
+        font-weight: bold;
+        color: #262626;
+        text-transform: uppercase;
+        margin-bottom: 40px;
+    }
+    .content h2 {
+      font-size: 35px;
+      font-weight: bold;
+      color: #262626;
+      text-transform: uppercase;
+      margin-bottom: 40px;
+    }
+    
+    .content p {
+    line-height: 1.5;
+    font-style: italic;
+    margin: auto;
+    color: #000;
+    }
+    
+    .textarea{
+      width: 100%;
+      height: 150px;
+      padding: 12px 20px;
+      box-sizing: border-box;
+      border-color: #000;
+      border-width: 1px;
+      border-radius: 4px;
+      background-color: #f8f8f8;
+      resize: none;
+      
+    }
+    .submit{
+      background-color: #fff;
+      border-color: #fff;
+      border-radius: 4px;
+      padding:10px;
+      margin:10px 0;
+      transition-duration: 0.4s;
+      color: #000;
+    }
+    .submit:hover {
+      background-color: #ddffde; 
+      color: #000;
+    }
+    datalist {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        writing-mode: vertical-lr;
+        width: 500px;
+    }
+    
+    </style>
+    
+    <div id="sentiment">
+        <section class="content">
+          <h2>Sentiment analysis</h2>
+          <form [formGroup]="sentimentForm" (submit)="findSentiment()">
+              <p>Enter the text for the sentiment analysis:</p>
+              
+              <div><textarea type="text" class="textarea" placeholder="Write text.." [formControlName]="'text'"></textarea></div>
+              
+              <div><input type="radio" name="lang" value="en" [formControlName]="'lang'"/>
+                <span>English</span>
+              </div>
+              
+              <div><input type="radio" name="lang" value="it" [formControlName]="'lang'"/>
+                  <span>Italian</span>
+              </div>
+              
+              <div><input type="radio" name="lang" value="auto" [formControlName]="'lang'"/>
+                <span>Auto</span>
+              </div>
+              
+              <div><input type="submit" class="submit" value="Submit"></div>
+              
+              <div>Your result will be from -1 to 1 and in this colors:</div>
+              <div style=" border-radius: 20px; width:500px;height:50px; background-image: linear-gradient(to right,red, brown , green);" list="lis"></div>
+              
+              <datalist id="tickmarks">
+                  <option value="-1">-1</option>
+                  <option value="0">0</option>
+                  <option value="1">1</option>
+                </datalist>
+              
+                <p>Results:</p>
+              
+                <div>
+                  <span>This is your sentiment: </span>
+                  <br>
+                  <button (click)="newColor()" name="color" style="height: 20px; width: 20px;"></button>
+                  <br>
+                  <div [style]="{color: primaryColor}">
+                    <span> {{this.sentiment.sentiment.type}}</span>
+                  </div>
+                  <br>
+                  <span>This is your score: </span>
+                  <br>
+                  <span style="color: blue;">{{this.sentiment.sentiment.score}}</span>
+                </div>
+                <div>
+                  <span>{{this.sentiment.timestamp}}</span>
+
+                </div>
+          </form>
+        </section>
+    </div>

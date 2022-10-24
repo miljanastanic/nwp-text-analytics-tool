@@ -1,0 +1,129 @@
+
+<style>
+  *{
+    margin: 0;
+    padding: 0;
+}
+body{
+    font-family: lato;
+}
+#box{
+    width: 100%;
+    height: 100vh;
+    scroll-behavior: smooth;
+    overflow-y: scroll;
+}
+#box div{
+    position: relative;
+    height: 100%;
+}
+.content {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    text-align: center;
+    padding: 0 40px;
+}
+.content h1 {
+    font-size: 70px;
+    font-weight: bold;
+    color: #262626;
+    text-transform: uppercase;
+    margin-bottom: 40px;
+}
+.content h2 {
+  font-size: 35px;
+  font-weight: bold;
+  color: #262626;
+  text-transform: uppercase;
+  margin-bottom: 40px;
+}
+
+.content p {
+line-height: 1.5;
+font-style: italic;
+margin: auto;
+color: #000;
+}
+ul {
+padding: 0;
+text-align: center;
+position: fixed;
+margin: 2% auto;
+z-index: 1;
+width: 1100px;
+left: 0;
+right: 0;
+    font-family: lato;
+}
+ul li{
+    list-style: none;
+    display: inline-block;
+}
+
+ul li a {
+display: block;
+text-decoration: none;
+height: 45px;
+font-size: 15px;
+width: 182px;
+background: transparent;
+color: #262626;
+margin: 0px 0;
+text-transform: uppercase;
+line-height: 45px;
+}
+ul li a:hover{
+    background: #99c68e;
+    text-decoration: none;
+    color: #fff;
+}
+#welcome{
+    background-image: url(plant.jpg);
+    -webkit-background-size: cover;
+    background-size: cover;
+    background-position: center center;
+}
+#home
+{
+background: #618764fe;
+}
+.submit{
+  background-color: #fff;
+  border-color: #fff;
+  border-radius: 4px;
+  padding:10px;
+  margin:10px 0;
+  transition-duration: 0.4s;
+  color: #000;
+}
+.submit:hover {
+  background-color: #ddffde; 
+  color: #000;
+  
+}
+.fname{
+  background-color: #fff;
+  border-color: #000;
+  border-width: 1.5px;
+  border-radius: 0%;
+  height: 20px;
+  width: 300px;
+}
+
+</style>
+
+<!-- Toolbar -->
+<div id="box">
+  <ul>
+  <li><a [routerLink]="'/home'" class="fa fa-home" aria-current="page">Home</a></li>
+  <li><a [routerLink]="'/entity'" class="fa fa-entity" aria-current="page">Entity extraction</a></li>
+  <li><a [routerLink]="'/similarity'" class="fa fa-similarity" aria-current="page">Text similarity</a></li>
+  <li><a [routerLink]="'/language'" class="fa fa-language" aria-current="page">Language detection</a></li>
+  <li><a [routerLink]="'/sentiment'" class="fa fa-sentiment" aria-current="page">Sentiment analysis</a></li>
+  <li><a [routerLink]="'/history'" class="fa fa-history" aria-current="page">History</a></li>
+  </ul>
+  <div class="container pt-3">
+    <router-outlet></router-outlet>
+  </div>
